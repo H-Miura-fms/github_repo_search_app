@@ -46,6 +46,7 @@ dependencies:
   retrofit_generator: ^8.1.0
   slang: ^3.31.0
   slang_flutter: ^3.31.0
+  json_annotation: ^4.9.0
 
 dev_dependencies:
   flutter_test:
