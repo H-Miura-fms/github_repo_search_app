@@ -1,0 +1,4 @@
+enum OrderQuery {
+  desc,
+  asc,
+}
