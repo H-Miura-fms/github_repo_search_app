@@ -13,11 +13,11 @@ class GithubRepoModel with _$GithubRepoModel {
   const factory GithubRepoModel({
     required String name,
     @JsonKey(name: "full_name") required String fullName,
-    required String description,
+    required String? description,
     required OwnerModel owner,
     @JsonKey(name: "stargazers_count") required int stargazersCount,
     @JsonKey(name: "watchers_count") required int watchersCount,
-    required String language,
+    required String? language,
     @JsonKey(name: "forks_count") required int forksCount,
     @JsonKey(name: "open_issues_count") required int openIssuesCount,
   }) = _GithubRepoModel;

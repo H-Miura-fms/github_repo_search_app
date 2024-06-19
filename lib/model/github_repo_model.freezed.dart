@@ -23,13 +23,13 @@ mixin _$GithubRepoModel {
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: "full_name")
   String get fullName => throw _privateConstructorUsedError;
-  String get description => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
   OwnerModel get owner => throw _privateConstructorUsedError;
   @JsonKey(name: "stargazers_count")
   int get stargazersCount => throw _privateConstructorUsedError;
   @JsonKey(name: "watchers_count")
   int get watchersCount => throw _privateConstructorUsedError;
-  String get language => throw _privateConstructorUsedError;
+  String? get language => throw _privateConstructorUsedError;
   @JsonKey(name: "forks_count")
   int get forksCount => throw _privateConstructorUsedError;
   @JsonKey(name: "open_issues_count")
@@ -50,11 +50,11 @@ abstract class $GithubRepoModelCopyWith<$Res> {
   $Res call(
       {String name,
       @JsonKey(name: "full_name") String fullName,
-      String description,
+      String? description,
       OwnerModel owner,
       @JsonKey(name: "stargazers_count") int stargazersCount,
       @JsonKey(name: "watchers_count") int watchersCount,
-      String language,
+      String? language,
       @JsonKey(name: "forks_count") int forksCount,
       @JsonKey(name: "open_issues_count") int openIssuesCount});
 
@@ -76,11 +76,11 @@ class _$GithubRepoModelCopyWithImpl<$Res, $Val extends GithubRepoModel>
   $Res call({
     Object? name = null,
     Object? fullName = null,
-    Object? description = null,
+    Object? description = freezed,
     Object? owner = null,
     Object? stargazersCount = null,
     Object? watchersCount = null,
-    Object? language = null,
+    Object? language = freezed,
     Object? forksCount = null,
     Object? openIssuesCount = null,
   }) {
@@ -93,10 +93,10 @@ class _$GithubRepoModelCopyWithImpl<$Res, $Val extends GithubRepoModel>
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
@@ -109,10 +109,10 @@ class _$GithubRepoModelCopyWithImpl<$Res, $Val extends GithubRepoModel>
           ? _value.watchersCount
           : watchersCount // ignore: cast_nullable_to_non_nullable
               as int,
-      language: null == language
+      language: freezed == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       forksCount: null == forksCount
           ? _value.forksCount
           : forksCount // ignore: cast_nullable_to_non_nullable
@@ -144,11 +144,11 @@ abstract class _$$GithubRepoModelImplCopyWith<$Res>
   $Res call(
       {String name,
       @JsonKey(name: "full_name") String fullName,
-      String description,
+      String? description,
       OwnerModel owner,
       @JsonKey(name: "stargazers_count") int stargazersCount,
       @JsonKey(name: "watchers_count") int watchersCount,
-      String language,
+      String? language,
       @JsonKey(name: "forks_count") int forksCount,
       @JsonKey(name: "open_issues_count") int openIssuesCount});
 
@@ -169,11 +169,11 @@ class __$$GithubRepoModelImplCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? fullName = null,
-    Object? description = null,
+    Object? description = freezed,
     Object? owner = null,
     Object? stargazersCount = null,
     Object? watchersCount = null,
-    Object? language = null,
+    Object? language = freezed,
     Object? forksCount = null,
     Object? openIssuesCount = null,
   }) {
@@ -186,10 +186,10 @@ class __$$GithubRepoModelImplCopyWithImpl<$Res>
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String,
-      description: null == description
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       owner: null == owner
           ? _value.owner
           : owner // ignore: cast_nullable_to_non_nullable
@@ -202,10 +202,10 @@ class __$$GithubRepoModelImplCopyWithImpl<$Res>
           ? _value.watchersCount
           : watchersCount // ignore: cast_nullable_to_non_nullable
               as int,
-      language: null == language
+      language: freezed == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       forksCount: null == forksCount
           ? _value.forksCount
           : forksCount // ignore: cast_nullable_to_non_nullable
@@ -241,7 +241,7 @@ class _$GithubRepoModelImpl implements _GithubRepoModel {
   @JsonKey(name: "full_name")
   final String fullName;
   @override
-  final String description;
+  final String? description;
   @override
   final OwnerModel owner;
   @override
@@ -251,7 +251,7 @@ class _$GithubRepoModelImpl implements _GithubRepoModel {
   @JsonKey(name: "watchers_count")
   final int watchersCount;
   @override
-  final String language;
+  final String? language;
   @override
   @JsonKey(name: "forks_count")
   final int forksCount;
@@ -320,11 +320,11 @@ abstract class _GithubRepoModel implements GithubRepoModel {
   const factory _GithubRepoModel(
       {required final String name,
       @JsonKey(name: "full_name") required final String fullName,
-      required final String description,
+      required final String? description,
       required final OwnerModel owner,
       @JsonKey(name: "stargazers_count") required final int stargazersCount,
       @JsonKey(name: "watchers_count") required final int watchersCount,
-      required final String language,
+      required final String? language,
       @JsonKey(name: "forks_count") required final int forksCount,
       @JsonKey(name: "open_issues_count")
       required final int openIssuesCount}) = _$GithubRepoModelImpl;
@@ -338,7 +338,7 @@ abstract class _GithubRepoModel implements GithubRepoModel {
   @JsonKey(name: "full_name")
   String get fullName;
   @override
-  String get description;
+  String? get description;
   @override
   OwnerModel get owner;
   @override
@@ -348,7 +348,7 @@ abstract class _GithubRepoModel implements GithubRepoModel {
   @JsonKey(name: "watchers_count")
   int get watchersCount;
   @override
-  String get language;
+  String? get language;
   @override
   @JsonKey(name: "forks_count")
   int get forksCount;
