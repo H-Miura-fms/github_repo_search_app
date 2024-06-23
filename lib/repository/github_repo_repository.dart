@@ -31,8 +31,14 @@ class GithubRepoRepository implements GithubRepoRepositoryImpl {
 
     try {
       // api
-      Map<String, dynamic> res = await githubRepoApiService
-          .fetchGitHubRepositories(keyWord: param.keyWord);
+      Map<String, dynamic> res =
+          await githubRepoApiService.fetchGitHubRepositories(
+        keyWord: param.keyWord,
+        sort: param.sort,
+        order: param.order,
+        perPage: param.perPage,
+        page: param.page,
+      );
 
       // repoリストを取得
       List datas = res["items"];

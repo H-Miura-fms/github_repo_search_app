@@ -22,7 +22,7 @@ class _GithubRepoApiService implements GithubRepoApiService {
   Future<dynamic> fetchGitHubRepositories({
     required String keyWord,
     SortQuery? sort,
-    OrderQuery? oder,
+    OrderQuery? order,
     int? perPage,
     int? page,
   }) async {
@@ -30,7 +30,7 @@ class _GithubRepoApiService implements GithubRepoApiService {
     final queryParameters = <String, dynamic>{
       r'q': keyWord,
       r'sort': sort?.name,
-      r'order': oder?.name,
+      r'order': order?.name,
       r'per_page': perPage,
       r'page': page,
     };

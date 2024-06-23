@@ -37,7 +37,7 @@ class MockGithubRepoApiService extends _i1.Mock
   _i3.Future<dynamic> fetchGitHubRepositories({
     required String? keyWord,
     _i4.SortQuery? sort,
-    _i5.OrderQuery? oder,
+    _i5.OrderQuery? order,
     int? perPage,
     int? page,
   }) =>
@@ -48,7 +48,7 @@ class MockGithubRepoApiService extends _i1.Mock
           {
             #keyWord: keyWord,
             #sort: sort,
-            #oder: oder,
+            #order: order,
             #perPage: perPage,
             #page: page,
           },
