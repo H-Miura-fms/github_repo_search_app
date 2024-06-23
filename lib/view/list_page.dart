@@ -19,6 +19,48 @@ class ListPage extends HookConsumerWidget {
     // リストstate
     final reposAsyncValue = ref.watch(githubRepoNotifierProvider(param.value));
 
+    // 追加読み込み処理
+    useEffect(() {
+      scrollController.addListener(
+        () {
+          if (scrollController.position.pixels >=
+              scrollController.position.maxScrollExtent * 0.9) {
+            ref
+                .read(githubRepoNotifierProvider(param.value).notifier)
+                .fetchNextPage();
+          }
+        },
+      );
+
+      return () => scrollController.dispose();
+    }, [scrollController]);
+
+    // 追加読み込みフッター
+    Widget buildFooter(
+        AsyncValue<List<dynamic>> reposAsyncValue, ListPageViewModel notifier) {
+      if (reposAsyncValue.isLoading) {
+        return const CircularProgressIndicator();
+      } else if (!ref
+          .read(githubRepoNotifierProvider(param.value).notifier)
+          .hasMoreResults) {
+        return const Text(
+          'すべて読み込みました',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        );
+      } else if (reposAsyncValue.hasError) {
+        return const Text(
+          'エラーが発生しました',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("GitHub Repositoy Serch"),
@@ -44,6 +86,18 @@ class ListPage extends HookConsumerWidget {
             ),
             error: (error, stackTrace) => SliverFillRemaining(
               child: Center(child: Text('Error: $error')),
+            ),
+          ),
+          // フッター
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Center(
+                child: buildFooter(
+                  reposAsyncValue,
+                  ref.read(githubRepoNotifierProvider(param.value).notifier),
+                ),
+              ),
             ),
           ),
         ],
