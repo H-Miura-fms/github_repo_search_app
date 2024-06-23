@@ -21,7 +21,7 @@ abstract class GithubRepoApiService {
   Future<dynamic> fetchGitHubRepositories({
     @Query("q") required String keyWord,
     @Query("sort") SortQuery? sort,
-    @Query("order") OrderQuery? oder,
+    @Query("order") OrderQuery? order,
     @Query("per_page") int? perPage,
     @Query("page") int? page,
   });
