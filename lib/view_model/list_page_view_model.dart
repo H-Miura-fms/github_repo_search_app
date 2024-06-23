@@ -25,6 +25,10 @@ class ListPageViewModel extends AutoDisposeFamilyAsyncNotifier<
 
   /// 初期化
   FutureOr<List<GithubRepoModel>> build(arg) async {
+    // 検索ワードが空欄だったら空を返す
+    if (arg.keyWord.isEmpty) {
+      return [];
+    }
     // ページを1に指定
     arg = arg.copyWith(page: _pageNum);
 
