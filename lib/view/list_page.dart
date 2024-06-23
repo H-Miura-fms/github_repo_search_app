@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:github_repo_search_app/commponent/search_area.dart';
 import 'package:github_repo_search_app/model/fetch_repo_api_query_param.dart';
 import 'package:github_repo_search_app/view/list_card.dart';
 import 'package:github_repo_search_app/view_model/list_page_view_model.dart';
@@ -12,9 +13,11 @@ class ListPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // controller
     final ScrollController scrollController = useScrollController();
+    final TextEditingController textEditingController =
+        useTextEditingController();
 
     // 検索クエリパラメータ
-    final param = useState(const FetchRepoApiQueryParam(keyWord: "flutter"));
+    final param = useState(const FetchRepoApiQueryParam(keyWord: ""));
 
     // リストstate
     final reposAsyncValue = ref.watch(githubRepoNotifierProvider(param.value));
@@ -68,6 +71,16 @@ class ListPage extends HookConsumerWidget {
       body: CustomScrollView(
         controller: scrollController,
         slivers: [
+          // 検索欄
+          SliverAppBar(
+            flexibleSpace: SearchArea(
+              controller: textEditingController,
+              onSubmitted: (keyWord) {
+                param.value = param.value.copyWith(keyWord: keyWord);
+              },
+            ),
+            expandedHeight: 68,
+          ),
           // 検索結果またはローディング/エラー表示
           reposAsyncValue.when(
             data: (repos) {
