@@ -29,10 +29,12 @@ class ListPageViewModel extends AutoDisposeFamilyAsyncNotifier<
     if (arg.keyWord.isEmpty) {
       return [];
     }
+
     // ページを1に指定
+    _pageNum = 1;
     arg = arg.copyWith(page: _pageNum);
 
-    final githubRepoList = _fetchList(arg);
+    final githubRepoList = _fetchList(arg, true);
 
     return githubRepoList;
   }
@@ -51,7 +53,8 @@ class ListPageViewModel extends AutoDisposeFamilyAsyncNotifier<
   }
 
   /// fetch method
-  Future<List<GithubRepoModel>> _fetchList(FetchRepoApiQueryParam param) async {
+  Future<List<GithubRepoModel>> _fetchList(FetchRepoApiQueryParam param,
+      [bool isRefresh = false]) async {
     final repo = ref.read(githubRepoRepositoryProvider);
 
     // fetch
@@ -64,6 +67,11 @@ class ListPageViewModel extends AutoDisposeFamilyAsyncNotifier<
 
     // pagenum更新
     _pageNum++;
+
+    // refreshの場合は最新のみ返す
+    if (isRefresh) {
+      return newList;
+    }
 
     // 追加読み込みの場合つなげて返す
     final currentList = state.value ?? [];
