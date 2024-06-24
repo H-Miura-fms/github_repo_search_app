@@ -48,6 +48,7 @@ dependencies:
   slang_flutter: ^3.31.0
   json_annotation: ^4.9.0
   mockito: ^5.4.4
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:
