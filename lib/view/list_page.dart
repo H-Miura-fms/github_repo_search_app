@@ -22,6 +22,9 @@ class ListPage extends HookConsumerWidget {
     // リストstate
     final reposAsyncValue = ref.watch(githubRepoNotifierProvider(param.value));
 
+    // リフレッシュ可能状態(リフレッシュのみローディングを表示)
+    final isRefreshArea = useState(false);
+
     // 追加読み込み処理
     useEffect(() {
       scrollController.addListener(
@@ -30,8 +33,11 @@ class ListPage extends HookConsumerWidget {
               scrollController.position.maxScrollExtent * 0.9) {
             ref
                 .read(githubRepoNotifierProvider(param.value).notifier)
-                .fetchNextPage();
+                .fetchNextPage()
+                .then((_) {});
           }
+          // スクロールしたらリフレッシュ可能状態解除
+          isRefreshArea.value = false;
         },
       );
 
@@ -68,52 +74,79 @@ class ListPage extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text("GitHub Repositoy Serch"),
       ),
-      body: CustomScrollView(
-        controller: scrollController,
-        slivers: [
-          // 検索欄
-          SliverAppBar(
-            flexibleSpace: SearchArea(
-              controller: textEditingController,
-              onSubmitted: (keyWord) {
-                param.value = param.value.copyWith(keyWord: keyWord);
-              },
-            ),
-            expandedHeight: 68,
-          ),
-          // 検索結果またはローディング/エラー表示
-          reposAsyncValue.when(
-            data: (repos) {
-              return SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final repo = repos[index];
-                    return ListCard(repo: repo);
-                  },
-                  childCount: repos.length,
+      body: RefreshIndicator(
+        // pull to refresh
+        onRefresh: () async {
+          if (reposAsyncValue.isRefreshing) {
+            return;
+          }
+          //リフレッシュ可能状態にする
+          isRefreshArea.value = true;
+          final _ = ref.refresh(githubRepoNotifierProvider(param.value));
+        },
+        child: Stack(
+          children: [
+            CustomScrollView(
+              controller: scrollController,
+              physics: (param.value.keyWord.isEmpty)
+                  ? null
+                  : const AlwaysScrollableScrollPhysics(),
+              slivers: [
+                // 検索欄
+                SliverAppBar(
+                  flexibleSpace: SearchArea(
+                    controller: textEditingController,
+                    onSubmitted: (keyWord) {
+                      param.value = param.value.copyWith(keyWord: keyWord);
+                    },
+                  ),
+                  expandedHeight: 68,
                 ),
-              );
-            },
-            loading: () => const SliverFillRemaining(
-              child: Center(child: CircularProgressIndicator()),
+                // 検索結果またはローディング/エラー表示
+                reposAsyncValue.when(
+                  data: (repos) {
+                    return SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final repo = repos[index];
+                          return ListCard(repo: repo);
+                        },
+                        childCount: repos.length,
+                      ),
+                    );
+                  },
+                  loading: () => const SliverFillRemaining(
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                  error: (error, stackTrace) => SliverFillRemaining(
+                    child: Center(child: Text('Error: $error')),
+                  ),
+                ),
+                // フッター
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Center(
+                      child: buildFooter(
+                        reposAsyncValue,
+                        ref.read(
+                            githubRepoNotifierProvider(param.value).notifier),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            error: (error, stackTrace) => SliverFillRemaining(
-              child: Center(child: Text('Error: $error')),
-            ),
-          ),
-          // フッター
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                child: buildFooter(
-                  reposAsyncValue,
-                  ref.read(githubRepoNotifierProvider(param.value).notifier),
+            // リフレッシュ時，画面全体にローディング
+            if (reposAsyncValue.isRefreshing && isRefreshArea.value)
+              const ColoredBox(
+                color: Colors.black26,
+                child: Center(
+                  child: CircularProgressIndicator(),
                 ),
               ),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
