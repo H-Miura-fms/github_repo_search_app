@@ -65,3 +65,16 @@ class GithubRepoRepository implements GithubRepoRepositoryImpl {
     }
   }
 }
+
+class GithubRepoRepositoryMock implements GithubRepoRepositoryImpl {
+  @override
+  GithubRepoApiService githubRepoApiService;
+
+  GithubRepoRepositoryMock({required this.githubRepoApiService});
+
+  @override
+  Future<List<GithubRepoModel>> fetchRepos(FetchRepoApiQueryParam param) {
+    // TODO: implement fetchRepos
+    throw UnimplementedError();
+  }
+}
