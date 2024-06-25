@@ -125,7 +125,21 @@ class DetailPage extends ConsumerWidget {
             const SizedBox(
               width: 10,
             ),
-            Text(repo?.fullName ?? ""),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "${repo?.owner.name ?? ""}/",
+                    style: const TextStyle(fontSize: 12),
+                  ),
+                  Text(
+                    repo?.name ?? "",
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
