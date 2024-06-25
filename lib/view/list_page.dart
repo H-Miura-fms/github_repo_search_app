@@ -120,6 +120,14 @@ class ListPage extends HookConsumerWidget {
                 // 検索結果またはローディング/エラー表示
                 reposAsyncValue.when(
                   data: (repos) {
+                    // 検索結果がなかった場合
+                    if (repos.isEmpty && param.value.keyWord.isNotEmpty) {
+                      return const SliverFillRemaining(
+                        child: Center(
+                          child: Text("no result"),
+                        ),
+                      );
+                    }
                     return SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
