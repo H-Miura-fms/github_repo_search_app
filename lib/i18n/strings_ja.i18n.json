@@ -1,0 +1,20 @@
+{
+	"@@locale": "en",
+	"msg": {
+		"all_loaded": "すべて読み込みました",
+		"error": "エラーが発生しました",
+		"no_result": "検索結果がありません"
+	},
+	"button_label": {
+		"reload": "リロード",
+		"dark_mode": "ダークモード"
+	},
+	"language": {
+		"title": "言語",
+		"label(map)": {
+			"en": "English",
+			"ja": "日本語",
+			"zhCn": "中文(简体)"
+		}
+	}
+}
