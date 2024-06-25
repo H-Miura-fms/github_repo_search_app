@@ -12,28 +12,30 @@ class MainPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deviceType = ref.read(deviceTypeProvider);
 
-    // タブレットの場合，listと詳細を横並びにする
-    if (deviceType == DeviceType.tablet) {
-      return Scaffold(
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            double listPageWidth = constraints.maxWidth * 0.4;
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("GitHub Repository Search"),
+      ),
+      // タブレットの場合，listと詳細を横並びにする
 
-            return Row(
-              children: [
-                SizedBox(
-                  width: listPageWidth,
-                  child: const ListPage(),
-                ),
-                // 詳細ページ
-                const Expanded(child: DetailPage())
-              ],
-            );
-          },
-        ),
-      );
-    } else {
-      return const ListPage();
-    }
+      body: (deviceType == DeviceType.tablet)
+          ? LayoutBuilder(
+              builder: (context, constraints) {
+                double listPageWidth = constraints.maxWidth * 0.4;
+
+                return Row(
+                  children: [
+                    SizedBox(
+                      width: listPageWidth,
+                      child: const ListPage(),
+                    ),
+                    // 詳細ページ
+                    const Expanded(child: DetailPage())
+                  ],
+                );
+              },
+            )
+          : const ListPage(),
+    );
   }
 }
