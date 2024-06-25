@@ -70,6 +70,24 @@ class ListPage extends HookConsumerWidget {
       }
     }
 
+    // エラー
+    Widget errorWidget() {
+      return Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text("error ocuured"),
+            ElevatedButton(
+                onPressed: () {
+                  // リロード
+                  ref.invalidate(githubRepoNotifierProvider(param.value));
+                },
+                child: const Text("reload"))
+          ],
+        ),
+      );
+    }
+
     return Scaffold(
       body: RefreshIndicator(
         // pull to refresh
@@ -116,7 +134,7 @@ class ListPage extends HookConsumerWidget {
                     child: Center(child: CircularProgressIndicator()),
                   ),
                   error: (error, stackTrace) => SliverFillRemaining(
-                    child: Center(child: Text('Error: $error')),
+                    child: errorWidget(),
                   ),
                 ),
                 // フッター
