@@ -4,6 +4,7 @@ import 'package:github_repo_search_app/model/github_repo_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_symbols_icons/material_symbols_icons.dart';
 
+import '../core/theme/repo_count_color.dart';
 import '../provider/common/selected_repo_provider.dart';
 
 class DetailPage extends ConsumerWidget {
@@ -12,6 +13,9 @@ class DetailPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     GithubRepoModel? repo = ref.watch(selectRepoStateProvider);
+
+    final CountBackgroundColor countBackgroundColor =
+        Theme.of(context).extension<CountBackgroundColor>()!;
 
     // アバター
     Widget ownerIcon(String url) {
@@ -114,8 +118,6 @@ class DetailPage extends ConsumerWidget {
     // メインビルド
     return Scaffold(
       appBar: AppBar(
-        titleTextStyle: const TextStyle(
-            fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black),
         // iconとリポジトリ名
         title: Row(
           children: [
@@ -147,7 +149,7 @@ class DetailPage extends ConsumerWidget {
                             Icons.star_border_rounded,
                             repo.stargazersCount,
                             "stars",
-                            const Color.fromARGB(255, 255, 249, 196)),
+                            countBackgroundColor.starColor),
                       ),
                       Expanded(
                         flex: 1,
@@ -155,7 +157,7 @@ class DetailPage extends ConsumerWidget {
                           Icons.visibility_outlined,
                           repo.watchersCount,
                           "watchers",
-                          const Color.fromARGB(255, 227, 242, 253),
+                          countBackgroundColor.watcherColor,
                         ),
                       ),
                     ],
@@ -169,7 +171,7 @@ class DetailPage extends ConsumerWidget {
                           Symbols.family_history_rounded,
                           repo.forksCount,
                           "forks",
-                          const Color.fromARGB(255, 232, 245, 233),
+                          countBackgroundColor.forkColor,
                         ),
                       ),
                       Expanded(
@@ -178,7 +180,7 @@ class DetailPage extends ConsumerWidget {
                           Icons.adjust,
                           repo.openIssuesCount,
                           "isuues",
-                          const Color.fromARGB(255, 255, 243, 224),
+                          countBackgroundColor.issueColor,
                         ),
                       ),
                     ],
