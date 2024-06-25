@@ -71,9 +71,6 @@ class ListPage extends HookConsumerWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("GitHub Repositoy Serch"),
-      ),
       body: RefreshIndicator(
         // pull to refresh
         onRefresh: () async {
