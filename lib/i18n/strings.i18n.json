@@ -1,0 +1,20 @@
+{
+	"@@locale": "en",
+	"msg": {
+		"all_loaded": "All loaded.",
+		"error": "Error ocured.",
+		"no_result": "No result"
+	},
+	"button_label": {
+		"reload": "Reload",
+		"dark_mode": "Dark Mode"
+	},
+	"language": {
+		"title": "language",
+		"label(map)": {
+			"en": "English",
+			"ja": "日本語",
+			"zhCn": "中文(简体)"
+		}
+	}
+}
