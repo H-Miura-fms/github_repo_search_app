@@ -6,11 +6,17 @@ import 'package:github_repo_search_app/view/list_card.dart';
 import 'package:github_repo_search_app/view_model/list_page_view_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../i18n/strings.g.dart';
+import '../provider/common/locale_provider.dart';
+
 class ListPage extends HookConsumerWidget {
   const ListPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // 言語選択
+    ref.watch(localeNotiferProvider);
+
     // controller
     final ScrollController scrollController = useScrollController();
     final TextEditingController textEditingController =
@@ -52,16 +58,16 @@ class ListPage extends HookConsumerWidget {
       } else if (!ref
           .read(githubRepoNotifierProvider(param.value).notifier)
           .hasMoreResults) {
-        return const Text(
-          'すべて読み込みました',
-          style: TextStyle(
+        return Text(
+          t.msg.all_loaded,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         );
       } else if (reposAsyncValue.hasError) {
-        return const Text(
-          'エラーが発生しました',
-          style: TextStyle(
+        return Text(
+          t.msg.error,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
           ),
         );
@@ -76,13 +82,13 @@ class ListPage extends HookConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text("error ocuured"),
+            Text(t.msg.error),
             ElevatedButton(
                 onPressed: () {
                   // リロード
                   ref.invalidate(githubRepoNotifierProvider(param.value));
                 },
-                child: const Text("reload"))
+                child: Text(t.button_label.reload))
           ],
         ),
       );
@@ -122,9 +128,9 @@ class ListPage extends HookConsumerWidget {
                   data: (repos) {
                     // 検索結果がなかった場合
                     if (repos.isEmpty && param.value.keyWord.isNotEmpty) {
-                      return const SliverFillRemaining(
+                      return SliverFillRemaining(
                         child: Center(
-                          child: Text("no result"),
+                          child: Text(t.msg.no_result),
                         ),
                       );
                     }
