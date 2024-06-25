@@ -29,6 +29,11 @@ class ListCard extends ConsumerWidget {
         }
       },
       child: Card(
+        // 選択されたら色を変える(タブレットのみ)
+        color: (ref.watch(selectRepoStateProvider) == repo &&
+                (ref.read(deviceTypeProvider) != DeviceType.mobile))
+            ? Theme.of(context).colorScheme.primaryContainer
+            : null,
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         elevation: 0,
         child: Padding(
