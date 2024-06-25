@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:github_repo_search_app/provider/common/device_type_provider.dart';
+import 'package:github_repo_search_app/view/detail_page.dart';
 import 'package:github_repo_search_app/view/list_page.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -24,8 +25,8 @@ class MainPage extends ConsumerWidget {
                   width: listPageWidth,
                   child: const ListPage(),
                 ),
-                // 詳細ページ(仮)
-                Expanded(child: Container())
+                // 詳細ページ
+                const Expanded(child: DetailPage())
               ],
             );
           },
